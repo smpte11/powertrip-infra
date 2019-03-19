@@ -1,22 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: day-service
+  name: day-deployment
+  labels:
+    app: day-app
 spec:
   selector:
     matchLabels:
-      app: day-service
+      app: day-app   
   template:
     metadata:
       labels:
-        app: day-service
+        app: day-app
     spec:
       containers:
-      - name: day-service
-        image: smpte11/powertrip-day-service:1.0.0
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
-        ports:
-        - containerPort: 8080
+        - name: day-app
+          image: smpte11/powertrip-day-service:1.0.0
+          env:
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: day-secret
+                  key: mongo_uri
+          ports:
+            - containerPort: 8080

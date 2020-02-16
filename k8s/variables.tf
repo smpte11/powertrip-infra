@@ -1,10 +1,14 @@
 variable location {}
 
+variable group {}
+
 variable environment {}
 
 variable client_id {}
 
 variable client_secret {}
+
+variable subnet_id {}
 
 variable prefix {
   default = "day"
@@ -12,8 +16,4 @@ variable prefix {
 
 variable agent_count {
   default = 1
-}
-
-variable ssh_public_key {
-  default = "~/.ssh/id_rsa.pub"
 }

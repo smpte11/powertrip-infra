@@ -6,13 +6,21 @@ terraform {
   backend "azurerm" {}
 }
 
+module "common" {
+  source = "./common"
 
-module "stage" {
-  source = "./stage"
+  location = var.location
+}
+
+
+module "prod" {
+  source = "./prod"
 
   client_id     = var.client_id
   client_secret = var.client_secret
 
   location    = var.location
   environment = var.environment
+
+  group = module.common.group_name
 }

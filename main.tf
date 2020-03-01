@@ -20,9 +20,9 @@ module "common" {
 module "vnet" {
   source = "./vnet"
 
-  group       = var.group
   location    = var.location
   environment = var.environment
+  group       = module.common.group_name
 }
 
 module "k8s" {

@@ -13,16 +13,15 @@ terraform {
 
 module "common" {
   source = "./common"
-
-  location = var.location
 }
 
 module "vnet" {
   source = "./vnet"
 
-  location    = var.location
   environment = var.environment
-  group       = module.common.group_name
+
+  group    = module.common.group
+  location = module.common.location
 }
 
 module "k8s" {
@@ -31,10 +30,10 @@ module "k8s" {
   client_id     = var.client_id
   client_secret = var.client_secret
 
-  location    = var.location
   environment = var.environment
 
-  subnet_id = module.vnet.subnet_ids.subnet1
+  subnet_id = module.vnet.k8s_subnet_ids.k8s
 
-  group = module.common.group_name
+  group    = module.common.group
+  location = module.common.location
 }

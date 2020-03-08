@@ -2,17 +2,17 @@ variable group {}
 variable location {}
 variable environment {}
 
-resource azurerm_virtual_network powertrip {
-  name                = "powertrip-network"
+resource azurerm_virtual_network powertrip_k8s_vnet {
+  name                = "powertrip-k8s-vnet"
   location            = var.location
   resource_group_name = var.group
 
-  address_space = ["10.0.0.0/16"]
+  address_space = ["172.0.0.0/8"]
   dns_servers   = ["10.0.0.4", "10.0.0.5"]
 
   subnet {
-    name           = "subnet1"
-    address_prefix = "10.0.1.0/24"
+    name           = "k8s"
+    address_prefix = "172.0.0.0/16"
   }
 
   tags = {
@@ -20,9 +20,34 @@ resource azurerm_virtual_network powertrip {
   }
 }
 
-output subnet_ids {
+output k8s_subnet_ids {
   value = {
-    for subnet in azurerm_virtual_network.powertrip.subnet :
+    for subnet in azurerm_virtual_network.powertrip_k8s_vnet.subnet :
+    subnet.name => subnet.id
+  }
+}
+
+resource azurerm_virtual_network powertrip_functions_vnet {
+  name                = "powertrip-church-vnet"
+  location            = var.location
+  resource_group_name = var.group
+
+  address_space = ["172.31.0.0/16"]
+  dns_servers   = ["10.0.0.4", "10.0.0.5"]
+
+  subnet {
+    name           = "churchservices"
+    address_prefix = "172.31.0.0/16"
+  }
+
+  tags = {
+    environment = var.environment
+  }
+}
+
+output functions_subnet_ids {
+  value = {
+    for subnet in azurerm_virtual_network.powertrip_functions_vnet.subnet :
     subnet.name => subnet.id
   }
 }

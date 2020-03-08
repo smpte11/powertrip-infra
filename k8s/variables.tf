@@ -11,7 +11,7 @@ variable client_secret {}
 variable subnet_id {}
 
 variable prefix {
-  default = "day"
+  default = "powertrip"
 }
 
 variable agent_count {

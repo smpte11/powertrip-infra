@@ -1,15 +1,11 @@
 locals {
   env = {
     default = {
-
-    }
-
-    dev = {
-
+      environment = "dev"
     }
 
     prod = {
-
+      environment = "prod"
     }
   }
 

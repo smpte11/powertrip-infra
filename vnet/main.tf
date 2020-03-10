@@ -26,28 +26,3 @@ output k8s_subnet_ids {
     subnet.name => subnet.id
   }
 }
-
-resource azurerm_virtual_network powertrip_functions_vnet {
-  name                = "powertrip-church-vnet"
-  location            = var.location
-  resource_group_name = var.group
-
-  address_space = ["172.31.0.0/16"]
-  dns_servers   = ["10.0.0.4", "10.0.0.5"]
-
-  subnet {
-    name           = "churchservices"
-    address_prefix = "172.31.0.0/16"
-  }
-
-  tags = {
-    environment = var.environment
-  }
-}
-
-output functions_subnet_ids {
-  value = {
-    for subnet in azurerm_virtual_network.powertrip_functions_vnet.subnet :
-    subnet.name => subnet.id
-  }
-}

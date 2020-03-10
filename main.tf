@@ -43,8 +43,6 @@ module church {
 
   environment = var.environment
 
-  subnet_id = module.vnet.functions_subnet_ids.churchservices
-
   group    = module.common.group
   location = module.common.location
 }

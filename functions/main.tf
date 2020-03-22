@@ -1,7 +1,6 @@
 variable group {}
 variable location {}
 variable environment {}
-variable subnet_id {}
 
 resource azurerm_storage_account church {
   name                     = "powertripchurchsa"
@@ -30,10 +29,12 @@ resource azurerm_function_app weatherchannel {
   app_service_plan_id       = azurerm_app_service_plan.church.id
   storage_connection_string = azurerm_storage_account.church.primary_connection_string
 
-  site_config {
-    ip_restriction {
-      subnet_id = var.subnet_id
-    }
+  app_settings = {
+    https_only                   = true
+    version                      = "~3"
+    FUNCTIONS_WORKER_RUNTIME     = "node"
+    WEBSITE_NODE_DEFAULT_VERSION = "~12"
+    FUNCTION_APP_EDIT_MODE       = "readonly"
   }
 }
 
@@ -44,4 +45,11 @@ resource azurerm_function_app apigateway {
   app_service_plan_id       = azurerm_app_service_plan.church.id
   storage_connection_string = azurerm_storage_account.church.primary_connection_string
 
+  app_settings = {
+    https_only                   = true
+    version                      = "~3"
+    FUNCTIONS_WORKER_RUNTIME     = "node"
+    WEBSITE_NODE_DEFAULT_VERSION = "~12"
+    FUNCTION_APP_EDIT_MODE       = "readonly"
+  }
 }

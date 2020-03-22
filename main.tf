@@ -1,5 +1,6 @@
 provider "azurerm" {
-  version = "~>1.5"
+  version = "=2.2.0"
+  features {}
 }
 
 terraform {
@@ -40,6 +41,15 @@ module "k8s" {
 
 module church {
   source = "./functions"
+
+  environment = var.environment
+
+  group    = module.common.group
+  location = module.common.location
+}
+
+module frontend {
+  source = "./frontend"
 
   environment = var.environment
 

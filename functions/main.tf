@@ -28,10 +28,10 @@ resource azurerm_function_app weatherchannel {
   resource_group_name       = var.group
   app_service_plan_id       = azurerm_app_service_plan.church.id
   storage_connection_string = azurerm_storage_account.church.primary_connection_string
+  https_only                = true
+  version                   = "~3"
 
   app_settings = {
-    https_only                   = true
-    version                      = "~3"
     FUNCTIONS_WORKER_RUNTIME     = "node"
     WEBSITE_NODE_DEFAULT_VERSION = "~12"
     FUNCTION_APP_EDIT_MODE       = "readonly"
@@ -44,10 +44,10 @@ resource azurerm_function_app apigateway {
   resource_group_name       = var.group
   app_service_plan_id       = azurerm_app_service_plan.church.id
   storage_connection_string = azurerm_storage_account.church.primary_connection_string
+  https_only                = true
+  version                   = "~3"
 
   app_settings = {
-    https_only                   = true
-    version                      = "~3"
     FUNCTIONS_WORKER_RUNTIME     = "node"
     WEBSITE_NODE_DEFAULT_VERSION = "~12"
     FUNCTION_APP_EDIT_MODE       = "readonly"

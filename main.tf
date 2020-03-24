@@ -39,15 +39,6 @@ module "k8s" {
   location = module.common.location
 }
 
-module church {
-  source = "./functions"
-
-  environment = var.environment
-
-  group    = module.common.group
-  location = module.common.location
-}
-
 module frontend {
   source = "./frontend"
 
@@ -55,4 +46,17 @@ module frontend {
 
   group    = module.common.group
   location = module.common.location
+}
+
+module church {
+  source = "./functions"
+
+  environment = var.environment
+
+  group           = module.common.group
+  location        = module.common.location
+  allowed_origins = module.frontend.url
+  node_env        = var.node_env
+  weather_code    = var.weather_code
+  darksky_key     = var.darksky_key
 }

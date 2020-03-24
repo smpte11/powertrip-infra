@@ -1,6 +1,10 @@
 variable group {}
 variable location {}
 variable environment {}
+variable allowed_origins {}
+variable node_env {}
+variable weather_code {}
+variable darksky_key {}
 
 resource azurerm_storage_account church {
   name                     = "powertripchurchsa"
@@ -35,6 +39,8 @@ resource azurerm_function_app weatherchannel {
     FUNCTIONS_WORKER_RUNTIME     = "node"
     WEBSITE_NODE_DEFAULT_VERSION = "~12"
     FUNCTION_APP_EDIT_MODE       = "readonly"
+    NODE_ENV                     = var.node_env
+    DARKSKY_API_KEY              = var.darksky_key
   }
 }
 
@@ -51,5 +57,15 @@ resource azurerm_function_app apigateway {
     FUNCTIONS_WORKER_RUNTIME     = "node"
     WEBSITE_NODE_DEFAULT_VERSION = "~12"
     FUNCTION_APP_EDIT_MODE       = "readonly"
+    WEATHER_CODE                 = var.weather_code
+    NODE_ENV                     = var.node_env
+  }
+
+  site_config {
+    cors {
+      allowed_origins = [
+        var.allowed_origins
+      ]
+    }
   }
 }

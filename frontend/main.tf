@@ -20,3 +20,7 @@ resource azurerm_storage_account frontendsa {
     environment = var.environment
   }
 }
+
+output url {
+  value = azurerm_storage_account.frontendsa.primary_web_endpoint
+}

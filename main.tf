@@ -16,28 +16,28 @@ module "common" {
   source = "./common"
 }
 
-module "vnet" {
-  source = "./vnet"
+# module "vnet" {
+#   source = "./vnet"
 
-  environment = var.environment
+#   environment = var.environment
 
-  group    = module.common.group
-  location = module.common.location
-}
+#   group    = module.common.group
+#   location = module.common.location
+# }
 
-module "k8s" {
-  source = "./k8s"
+# module "k8s" {
+#   source = "./k8s"
 
-  client_id     = var.client_id
-  client_secret = var.client_secret
+#   client_id     = var.client_id
+#   client_secret = var.client_secret
 
-  environment = var.environment
+#   environment = var.environment
 
-  subnet_id = module.vnet.k8s_subnet_ids.k8s
+#   subnet_id = module.vnet.k8s_subnet_ids.k8s
 
-  group    = module.common.group
-  location = module.common.location
-}
+#   group    = module.common.group
+#   location = module.common.location
+# }
 
 module frontend {
   source = "./frontend"
